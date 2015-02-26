@@ -46,9 +46,9 @@ public class Knights{
     }
 
     public void solve(int x, int y){
-	startX = x+1;
-	startY = y+1;
-	solveHelper(x+1,y+1);
+	startX = x+2;
+	startY = y+2;
+	solveHelper(x+2,y+2);
 	errorCheck(x,y);
     }
     
@@ -86,11 +86,11 @@ public class Knights{
     }
     
     public static void main(String[] args){
-	int n = 8;
+	int n = 5;
 	Knights k = new Knights(n);
 	Random r = new Random();
-	int x = r.nextInt(n)+1;
-	int y = r.nextInt(n)+1;
+	int x = r.nextInt(n);
+	int y = r.nextInt(n);
 	k.solve(x,y);
 	System.out.print(k);
     }
