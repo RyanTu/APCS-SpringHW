@@ -59,21 +59,16 @@ public class Qsort{
         return (wall+rwall)/2;
     }
 
-    public int[] qsort(int[] a,  int l, int h){
-        int pi,pval;
-        pi = partition(a,l,h);
-        pval = a[pi];
-        if (pi==l || pi==h){
-	    return null;
+    public void qsort(int[] a, int l, int h){
+        if (l<h){
+	    int pi = partition(a,l,h);
+	    qsort(a,pi+1,h);
+	    qsort(a,l,pi-1);
 	}
-	qsort(a,pi+1,h);
-	qsort(a,l,pi-1);
-	return a;
     }
 
-    public int[] sort(int k){
-        b = Arrays.copyOf(a,a.length);
-        return qsort(b,0,b.length-1);
+    public void sort(){
+        qsort(a,0,a.length-1);
     }
 
     public static void main(String[] args) {
@@ -85,7 +80,7 @@ public class Qsort{
         }
         System.out.println();
 	*/
-        Arrays.sort(q.a);
+        q.sort();
         System.out.println(q);
     }
 }
