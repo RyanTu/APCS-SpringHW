@@ -1,7 +1,7 @@
 public class LList{
 
     private Node l = null;
-
+    
     public void add(String s){
 	Node tmp = new Node(s);
 	tmp.setNext(l);
@@ -25,30 +25,39 @@ public class LList{
 	s = s + "null";
 	return s;
     }
-
+    
+    /*
     public void insertAfter(int n, String s){
-	Node stuff = l;
-	for (int i = 0; i<n; i++){
-	    stuff = stuff.getNext();
+	Node after = l;
+	for (int i = 0; i<n-1; i++){
+	    after = after.getNext();
+	    System.out.print(after);
+	    System.out.println(after.getNext());
 	}
 	Node tmp = new Node(s);
-	tmp.setNext(stuff.getNext());
-	stuff.setNext(tmp);
+	tmp.setNext(after.getNext());
+        after.setNext(tmp);
     }
+    */
 
-    public void insertBefore(int n, String s){
-	Node stuff = l;
+    public void insert(int n, String s){
 	Node tmp = new Node(s);
+	Node after = l;
 	if (n == 0){
-	    tmp.setNext(stuff);
+	    tmp.setNext(l);
 	    l = tmp;
 	}
 	else {
-	    for (int i = 0; i<n-1; i++){
-		stuff = stuff.getNext();
+	    try {
+		for (int i = 0; i<n-1; i++){
+		    after = after.getNext();
+		}
+		tmp.setNext(after.getNext());
+		after.setNext(tmp);
 	    }
-	    tmp.setNext(stuff.getNext());
-	    stuff.setNext(tmp);
+	    catch (NullPointerException e) {
+		System.out.println("Try a different index");
+	    }
 	}
     }
 }

@@ -7,9 +7,9 @@ public class Driver{
 	    l.add(""+i);
 	}
 	System.out.println(l);
-        l.insertAfter(0,"a");
+        l.insert(0,"a");
 	System.out.println(l);
-	l.insertBefore(1,"b");
+	l.insert(3,"b");
 	System.out.println(l);
     }
 }
