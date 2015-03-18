@@ -4,7 +4,7 @@ public class LList{
     private int len = 0;
 
     public LList(){
-	l = new Node("");
+	l = new Node(000);
 	len = 0;
     }
 		
@@ -18,7 +18,7 @@ public class LList{
 	return s;
     }
     
-    public String get(int n){
+    public int get(int n){
 	Node tmp = l;
 	int i = 0;
 	while (i < n+1 && i < len){
@@ -28,14 +28,14 @@ public class LList{
 	return tmp.getData();
     }   
         
-    public void add(String s){
+    public void add(int s){
 	Node tmp = new Node(s);
 	tmp.setNext(l.getNext());
 	l.setNext(tmp);
 	len++;
     }
 
-    public void add(int n, String s){
+    public void add(int n, int s){
 	if (n<=len){
 	    Node tmp = new Node(s);
 	    Node after = l;
@@ -50,7 +50,7 @@ public class LList{
 	}
     }
 
-    public String remove(int n){
+    public int remove(int n){
 	Node before = null;
 	Node tmp = l;
 	if (n<=len){
@@ -62,6 +62,6 @@ public class LList{
 	    len--;
 	    return tmp.getData();
 	}
-	return null;
+	return -1;
     }
 }
