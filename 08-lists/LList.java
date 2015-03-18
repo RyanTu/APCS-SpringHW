@@ -50,7 +50,7 @@ public class LList{
 	}
     }
 
-    public Node remove(int n){
+    public String remove(int n){
 	Node before = null;
 	Node tmp = l;
 	if (n<=len){
@@ -60,7 +60,7 @@ public class LList{
 	    }
 	    before.setNext(tmp.getNext());
 	    len--;
-	    return tmp;
+	    return tmp.getData();
 	}
 	return null;
     }
