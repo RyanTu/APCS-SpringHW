@@ -4,8 +4,8 @@ public class LList{
     private int len = 0;
 
     public LList(){
-	l = new Node("dummy");
-	len = 1;
+	l = new Node("");
+	len = 0;
     }
 		
     public String toString(){
@@ -14,11 +14,11 @@ public class LList{
 	for (tmp=l ; tmp!=null ; tmp=tmp.getNext()){
 	    s = s + tmp + " --> ";
 	}
-	s = s + "null";
+	//s = s + "null";
 	return s;
     }
     
-    public String find(int n){
+    public String get(int n){
 	Node tmp = l;
 	int i = 0;
 	while (i < n+1 && i < len){
@@ -36,18 +36,32 @@ public class LList{
     }
 
     public void add(int n, String s){
-	Node tmp = new Node(s);
-	Node after = l;
-	if (n == 0){
-	    tmp.setNext(l);
-	    l = tmp;
-	}
-	else {
-	    for (int i = 0; i<n-1; i++){
+	if (n<=len){
+	    Node tmp = new Node(s);
+	    Node after = l;
+	    int i = 0;
+	    while (i<n && i<=len){
 		after = after.getNext();
+		i++;
 	    }
 	    tmp.setNext(after.getNext());
 	    after.setNext(tmp);
+	    len++;
 	}
+    }
+
+    public Node remove(int n){
+	Node before = null;
+	Node tmp = l;
+	if (n<=len){
+	    for (int i = 0; i<=n ; i++){
+		before = tmp;
+		tmp = tmp.getNext();
+	    }
+	    before.setNext(tmp.getNext());
+	    len--;
+	    return tmp;
+	}
+	return null;
     }
 }
