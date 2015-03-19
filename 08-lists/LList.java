@@ -4,7 +4,7 @@ public class LList{
     private int len = 0;
 
     public LList(){
-	l = new Node(000);
+	l = new Node(0);
 	len = 0;
     }
 		
@@ -14,7 +14,7 @@ public class LList{
 	for (tmp=l ; tmp!=null ; tmp=tmp.getNext()){
 	    s = s + tmp + " --> ";
 	}
-	//s = s + "null";
+	s = s + "null";
 	return s;
     }
     
@@ -63,5 +63,20 @@ public class LList{
 	    return tmp.getData();
 	}
 	return -1;
+    }
+
+    public boolean removeFirstOccur(int i){
+	Node tmp = l;
+	boolean removed = false;
+	for (int n = 0; n < len && !removed; n++){
+	    if (tmp.getNext().getData() == i){
+		tmp.setNext(tmp.getNext().getNext());
+		removed = true;
+		len--;
+	    }
+	    else
+		tmp = tmp.getNext();
+	}
+	return removed;
     }
 }
