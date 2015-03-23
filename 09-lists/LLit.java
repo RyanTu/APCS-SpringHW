@@ -2,25 +2,32 @@ import java.io.*;
 import java.util.*;
 
 public class LLit<E> implements Iterator<E>{
+
     private Node<E> t;
+    private Node<E> prev = null;
+    private boolean move = false;
     public LLit(Node<E> n){
 	t=n;
     }
 
     public boolean hasNext(){
-	return t!=null;
+	return t.getNext()!=null;
     }
 
     public E next(){
 	E retval = t.getData();
+	prev = t;
 	t=t.getNext();
+	move = true;
 	return retval;
     }
-
+    
     public void remove() {
-	if (t.getNext() == null)
-	    t = null;
-	else
-	    t = t.getNext();
+	if (!move){
+	    throw new IllegalStateException();
+	}
+        prev.setNext(t.getNext());
+	move = false;
     }
+*/
 }

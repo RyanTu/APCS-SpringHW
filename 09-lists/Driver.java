@@ -26,13 +26,13 @@ public class Driver{
 	System.out.println();
 	Iterator<String> i = l.iterator();
 	while (i.hasNext())
-	    System.out.println(i.next());
-				
-	l2.remove();
+	    System.out.println(i.next());		
+        
 	Iterator<Integer> i2 = l2.iterator();
+        i2.remove();
 	while (i2.hasNext())
 	    System.out.println(i2.next());
-	System.out.println(i2);
+	System.out.println(l2);
 
 	/*
 	// foreach or for in loop in Java

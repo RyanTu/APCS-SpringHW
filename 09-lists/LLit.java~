@@ -2,22 +2,69 @@ import java.io.*;
 import java.util.*;
 
 public class LLit<E> implements Iterator<E>{
-		private Node<E> t;
-		public LLit(Node<E> n){
-				t=n;
-		}
+    /*
+    private Node<E> t;
+    private Node<E> prev = null;
+    private boolean move = false;
+    public LLit(Node<E> n){
+	t=n;
+    }
 
-		public boolean hasNext(){
-				return t!=null;
-		}
+    public boolean hasNext(){
+	return t.getNext()!=null;
+    }
 
-		public E next(){
-				E retval = t.getData();
-				t=t.getNext();
-				return retval;
-		}
+    public E next(){
+	E retval = t.getData();
+	prev = t;
+	t=t.getNext();
+	move = true;
+	return retval;
+    }
 
-		public void remove() {
-				// fill this in later
-		}
+    public void remove() {
+	if (!move){
+	    throw new IllegalStateException();
+	}
+        prev.setNext(t.getNext());
+	t = t.getNext;
+	move = false;
+    }
+    */
+
+    private Node<E> l;
+    private Node<E> lprev;
+    private boolean removeisValid = false;
+
+    public LLiterator(Node<E> n){
+	l = n;
+	lprev = n;
+    }
+
+    public boolean hasNext(){
+	return l.getNext() != null;
+    }
+
+    /*
+      move to the next node
+      returns the value in original node
+    */
+    public E next(){
+	E data = l.getData();
+        removeisValid = true;
+	lprev = l;
+	l = l.getNext();
+	return data;
+    }
+    
+    public void remove() {
+	// if next has not yet been called or remove has
+	// already been called after the last call to next
+	if (!(removeisValid))
+	    throw new IllegalStateException();
+	lprev.setNext( l.getNext() );
+	l = l.getNext();
+	removeisValid = false;
+    }
+
 }
