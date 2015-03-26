@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class myStack<E>{
 
     // You decide how the node(s) are declared
@@ -17,6 +19,9 @@ public class myStack<E>{
     
     public E pop(){
         // remove and return the top item from the stack
+	if (l.getNext() == null){
+	    throw new EmptyStackException();
+	}
 	E retval = l.getNext().getData();
 	l.setNext(l.getNext().getNext());
 	return retval;
@@ -27,6 +32,9 @@ public class myStack<E>{
     }
 
     public E top() {
+	if (empty()){
+	    throw new EmptyStackException();
+	}
 	return l.getNext().getData();
     }
     
@@ -52,7 +60,7 @@ public class myStack<E>{
 	System.out.println(s.pop());
 	System.out.println(s.empty());
 	for (int i = 0; i<5; i++){
-	    s.push(i);3
+	    s.push(i);
 	}
 	System.out.println(s.top());
 	System.out.println(s);

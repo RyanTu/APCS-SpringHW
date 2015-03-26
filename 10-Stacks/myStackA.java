@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class myStackA {
 
     private int[] s;
@@ -21,6 +23,9 @@ public class myStackA {
 
     public int pop(){
         // remove and return the top item from the stack
+	if (len == 0){
+	    throw new EmptyStackException();
+	}
 	int retval = s[0];
 	len--;
 	int[] tmp = new int[len];
@@ -37,13 +42,19 @@ public class myStackA {
 
     public int top() {
         // return the top item from the stack
+	if (len == 0){
+	    throw new EmptyStackException();
+	}
 	return s[0];
     }
 
     public String toString() {
 	String ret = "[";
 	for (int i = 0; i < s.length; i++) {
-	    ret = ret + s[i] + ", ";
+	    ret = ret + s[i];
+	    if (i != s.length -1){
+		ret = ret + ", ";
+	    }
 	}
 	ret = ret + "]";
 	return ret;
