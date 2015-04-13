@@ -1,6 +1,6 @@
-public class Queue<E>{
-    Node<E> first;
-    Node<E> last;
+public class Queue{
+    Node first;
+    Node last;
     int length;
     
     public Queue(){
@@ -8,8 +8,8 @@ public class Queue<E>{
 	last = null;
     }
 
-    public void enqueue(E data){
-	Node<E> tmp = new Node<E>(data);
+    public void enqueue(Node n){
+	Node tmp = n;
 	if(first != null){
 	    last.setNext(tmp);
 	} else {
@@ -20,11 +20,11 @@ public class Queue<E>{
 	length++;
     }
 
-    public E dequeue(){
+    public Node dequeue(){
 	if(empty()){
 	    return null;
 	}
-	E data = first.getData();
+	Node data = first;
 	first = first.getNext();
 	length--;
 	return data;
@@ -34,16 +34,16 @@ public class Queue<E>{
 	return first == null;
     }
 
-    public E head(){
+    public Node head(){
 	if(empty()){
 	    return null;
 	}
-	return first.getData();
+	return first;
     }
 
     public String toString(){
 	String s = "";
-	Node<E> tmp = first;
+	Node tmp = first;
 	for (int i = 0; i<length; i++){
 	    s += tmp + " ";
 	    tmp = tmp.getNext();
@@ -53,6 +53,7 @@ public class Queue<E>{
 
     public static void main(String[] args) {
 	Queue q = new Queue();
+	/*
 	q.enqueue(1);
 	q.enqueue(2);
 	q.enqueue(3);
@@ -62,5 +63,6 @@ public class Queue<E>{
 	System.out.println(q);
 	System.out.println(q.empty());
 	System.out.println(q.head());
+	*/
     }
 }

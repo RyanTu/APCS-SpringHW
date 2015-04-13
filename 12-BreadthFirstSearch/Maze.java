@@ -66,63 +66,52 @@ public class Maze
     
     public void solve(int x, int y){
 
-        Queue<Integer> qX = new Queue<Integer>();
-        Queue<Integer> qY = new Queue<Integer>();
-        Queue<Integer> solveX = new Queue<Integer>();
-        Queue<Integer> solveY = new Queue<Integer>();	
-
-	if (qX.empty()){
-	    qX.enqueue(x);
-	    qY.enqueue(y);
+        Queue q = new Queue();	
+	Queue qBack = new Queue();
+	boolean done = false;
+	if (q.empty()){
+	    q.enqueue(new Node(board[x][y],x,y));
 	}
 
-	while(!qX.empty()){
-	    int currentX = qX.dequeue();
-	    int currentY = qY.dequeue();
-	    if (exit == board[currentX+1][currentY]){
-		solveX.enqueue(currentX+1);
-		solveY.enqueue(currentY);
-		board[currentX][currentY]=visited;
-	        return;
+	while(!q.empty()){
+	    Node p = q.dequeue();
+	    if (p.getData() == exit) {
+		solved = true;
 	    }
-	    if (exit == board[currentX][currentY+1]){
-		solveX.enqueue(currentX);
-		solveY.enqueue(currentY+1);
-		board[currentX][currentY]=visited;
-		return;
-	    }
-	    if (exit == board[currentX-1][currentY]){
-		solveX.enqueue(currentX-1);
-		solveY.enqueue(currentY);
-		board[currentX][currentY]=visited;
-		return;
-	    }
-	    if (exit == board[currentX][currentY-1]){
-		solveX.enqueue(currentX);
-		solveY.enqueue(currentY-1);
-		board[currentX][currentY]=visited;
-		return;
-	    }  
 
-	    if (path == board[currentX+1][currentY]){
-		qX.enqueue(currentX+1);
-		qY.enqueue(currentY);
+	    if (path == board[p.getX()+1][p.getY()] || exit == board[p.getX()+1][p.getY()]){
+		q.enqueue(new Node(board[p.getX()+1][p.getY()],p.getX()+1,p.getY(),p));
 	    }
-	    if (path == board[currentX][currentY+1]){
-		qX.enqueue(currentX);
-		qY.enqueue(currentY+1);
+	    if (path == board[p.getX()][p.getY()+1] || exit == board[p.getX()][p.getY()+1]){
+		q.enqueue(new Node(board[p.getX()][p.getY()+1],p.getX(),p.getY()+1,p));
 	    }
-	    if (path == board[currentX-1][currentY]){
-		qX.enqueue(currentX-1);
-		qY.enqueue(currentY);
+	    if (path == board[p.getX()-1][p.getY()] || exit == board[p.getX()-1][p.getY()]){
+		q.enqueue(new Node(board[p.getX()-1][p.getY()],p.getX()-1,p.getY(),p));
 	    }
-	    if (path == board[currentX][currentY-1]){
-		qX.enqueue(currentX);
-		qY.enqueue(currentY-1);
-	    }	   
+	    if (path == board[p.getX()][p.getY()-1] || exit == board[p.getX()][p.getY()-1]){
+		q.enqueue(new Node(board[p.getX()][p.getY()-1],p.getX(),p.getY()-1,p));
+	    }	    
 	    if (!solved){
-		board[currentX][currentY]=visited;
+		board[p.getX()][p.getY()]=visited;
+	    } else {
+		qBack.enqueue(p);
+	        break;
 	    }
+	}
+	int prevX;
+	int prevY;
+	while (!done){
+	    Node point = qBack.dequeue();
+	    if (point.getBefore() == null){
+		done = true;
+	    }
+	    else {
+		qBack.enqueue(point.getBefore());
+	    }
+	    prevX = point.getX();
+	    prevY = point.getY();
+	    board[prevX][prevY] = me;
+	    System.out.println(this);
 	}
     }
 	
