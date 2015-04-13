@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Maze 
+public class StackMaze 
 {
     private char[][] board;
     private int maxX;
@@ -20,7 +20,7 @@ public class Maze
 	} catch (Exception e) {}
     }
 		
-    public Maze() 
+    public StackMaze() 
     {
 	maxX=40;
 	maxY=20;
@@ -66,46 +66,46 @@ public class Maze
     
     public void solve(int x, int y){
 
-        Queue q = new Queue();	
-	Queue qBack = new Queue();
+        Stack s = new Stack();	
+	Stack sBack = new Stack();
 	boolean done = false;
-	if (q.empty()){
-	    q.enqueue(new Node(board[x][y],x,y));
+	if (s.empty()){
+	    s.push(new Node(board[x][y],x,y));
 	}
 
-	while(!q.empty()){
-	    Node p = q.dequeue();
+	while(!s.empty()){
+	    Node p = s.pop();
 	    if (board[p.getX()][p.getY()] == exit) {
 		solved = true;
 	    }
 	    if (path == board[p.getX()+1][p.getY()] || exit == board[p.getX()+1][p.getY()]){
-		q.enqueue(new Node(board[p.getX()+1][p.getY()],p.getX()+1,p.getY(),p));
+		s.push(new Node(board[p.getX()+1][p.getY()],p.getX()+1,p.getY(),p));
 	    }
 	    if (path == board[p.getX()][p.getY()+1] || exit == board[p.getX()][p.getY()+1]){
-		q.enqueue(new Node(board[p.getX()][p.getY()+1],p.getX(),p.getY()+1,p));
+		s.push(new Node(board[p.getX()][p.getY()+1],p.getX(),p.getY()+1,p));
 	    }
 	    if (path == board[p.getX()-1][p.getY()] || exit == board[p.getX()-1][p.getY()]){
-		q.enqueue(new Node(board[p.getX()-1][p.getY()],p.getX()-1,p.getY(),p));
+		s.push(new Node(board[p.getX()-1][p.getY()],p.getX()-1,p.getY(),p));
 	    }
 	    if (path == board[p.getX()][p.getY()-1] || exit == board[p.getX()][p.getY()-1]){
-		q.enqueue(new Node(board[p.getX()][p.getY()-1],p.getX(),p.getY()-1,p));
-	    }	    
+		s.push(new Node(board[p.getX()][p.getY()-1],p.getX(),p.getY()-1,p));
+	    }    
 	    if (!solved){
 		board[p.getX()][p.getY()]=visited;
 	    } else {
-		qBack.enqueue(new Node(board[p.getX()][p.getY()],p.getX(),p.getY(),p.getBefore()));
+		sBack.push(new Node(board[p.getX()][p.getY()],p.getX(),p.getY(),p.getBefore()));
 	        break;
 	    }
 	}
         int prevX;
 	int prevY;
 	while (!done){
-	    Node point = qBack.dequeue();
+	    Node point = sBack.pop();
 	    if (point.getBefore() == null){
 		done = true;
 	    }
 	    else{
-		qBack.enqueue(new Node(board[point.getBefore().getX()][point.getBefore().getY()],point.getBefore().getX(),point.getBefore().getY(),point.getBefore().getBefore()));
+		sBack.push(new Node(board[point.getBefore().getX()][point.getBefore().getY()],point.getBefore().getX(),point.getBefore().getY(),point.getBefore().getBefore()));
 	    } 
 	    prevX = point.getX();
 	    prevY = point.getY();
@@ -114,7 +114,7 @@ public class Maze
     }
 	
     public static void main(String[] args){
-	Maze m = new Maze();
+	StackMaze m = new StackMaze();
 	System.out.println(m);
 	m.solve(1,1);
 	System.out.println(m);

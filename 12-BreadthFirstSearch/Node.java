@@ -43,12 +43,12 @@ public class Node{
 	return data;
     }
 
-    public void setBefore(Node n){
-	before = n;
-    }
-
     public Node getBefore(){
 	return before;
+    }
+
+    public void setBefore(Node n){
+	before = n;
     }
 
     public void setNext(Node n){
