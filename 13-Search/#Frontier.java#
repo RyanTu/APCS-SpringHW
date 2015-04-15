@@ -1,0 +1,33 @@
+import java.util.*;
+
+public class Frontier {
+    public LinkedList<Node> l = new LinkedList<Node>();
+
+    public void add(Node n){
+	int index = 0;
+	for (Node tmp = l; l.getNext()!=null; l=l.getNext()){
+	    if (n.getPriority()<tmp.getPriority()){
+		l.add(index,n);
+	    }
+	    index++;
+	}
+    }
+
+    public Node remove() {
+	return l.remove(0);
+    }
+
+    public boolean isEmpty(){
+	return l.isEmpty();
+    }
+}
+
+
+
+
+
+
+
+
+
+
