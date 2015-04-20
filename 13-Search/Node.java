@@ -1,5 +1,5 @@
 public class Node {
-    private int x,y,priority;
+    private int x,y,priority,step;
     private Node prev;
 		
     public Node(int x, int y){
@@ -29,6 +29,14 @@ public class Node {
 
     public void setPriority(int n){
 	priority = n;
+    }
+
+    public int getStep(){
+	return step;
+    }
+
+    public void setStep(int n){
+	step = n;
     }
 		
 }

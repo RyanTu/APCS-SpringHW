@@ -4,7 +4,20 @@ public class Frontier {
     public LinkedList<Node> l = new LinkedList<Node>();
 
     public void add(Node n){
-	l.add(n);
+	int index = 0;
+	boolean lowCheck = false;
+	if (isEmpty()){
+	    l.add(n);
+	}
+	for (Node tmp = l.getFirst(); !lowCheck; tmp = l.get(index)){
+	    if (tmp.getPriority()<n.getPriority()){
+		index++;
+	    }
+	    else {
+		lowCheck = !lowCheck;
+	    }
+	}
+	l.add(index,n);
     }
 
     public Node remove() {
