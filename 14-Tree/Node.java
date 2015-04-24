@@ -1,15 +1,23 @@
 public class Node {
-    private int data;
+    private Integer data;
     private Node parent,left,right;
-		
-    public Node(int d){
+
+    public Node(){
+	data = null;
+    }
+    
+    public Node(Integer d){
         data = d;
     }
 
-    public int getData(){
+    public Integer getData(){
 	return data;
     }
 
+    public void setData(Integer i){
+	data = i;
+    }
+    
     public void setParent(Node n){
 	parent = n;
     }
