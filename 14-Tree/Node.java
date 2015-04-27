@@ -2,12 +2,14 @@ public class Node {
     private Integer data;
     private Node parent,left,right;
 
-    public Node(){
-	data = null;
+    public Node(Integer d){
+	data = d;
+	left = null;
+	right = null;
     }
     
-    public Node(Integer d){
-        data = d;
+    public Node(){
+        data = null;
     }
 
     public Integer getData(){
@@ -18,13 +20,13 @@ public class Node {
 	data = i;
     }
     
-    public void setParent(Node n){
-	parent = n;
-    }
-	
     public Node getParent() {
 	return parent;
     }
+
+    public void setParent(Node n){
+	parent = n;
+    }	
 
     public Node getLeft(){
 	return left;
@@ -41,7 +43,10 @@ public class Node {
     public void setRight(Node n){
 	right = n;
     }
-		
+
+    public String toString() {
+	return ""+data;
+    }
 }
 
 
