@@ -1,17 +1,17 @@
 public class Tree{
 
-    private Node data;
+    private Node root;
 
     public Tree(Node n){
-	data = n;
+	root = n;
     }
 
     public Tree(){
-	data = null;
+	root = null;
     }
-
+    
     public Node search (int i){
-	Node ret = search(data,i);
+	Node ret = search(root,i);
 	return ret;
     }
 
@@ -28,18 +28,14 @@ public class Tree{
 	}
 	return null;
     }
-
+    
     public void insert(int i){
-	insert(data,i);
-    }
-
-    public void insert(Node t, int i){
 	Node n = new Node(i);
-	if (t == null){
-	    t = n;
+	Node lead = root;
+	if (root == null){
+	    root = n;
 	}
 	else {
-	    Node lead = t;
 	    Node follow = null;
 	    while (lead != null){
 		follow = lead;
@@ -55,31 +51,29 @@ public class Tree{
 	}
     }
 
-    public Node rsearch(int i){
-	Node ret = rsearch(data,i);
-	return ret;
+   public Node rsearch(Node t, int i){
+	if (t==null || t.getData()==i){
+	    return t;
+	}
+	else if (i<t.getData()){
+	    return search(t.getLeft(),i);
+	} else {
+	    return search(t.getRight(),i);
+	}
     }
 
-    public Node rsearch(Node t, int i){
-	if (t == null){
-	    return null;
+    public String rsearch(int i){
+	Node n = search(root,i);
+	if (n==null){
+	    return "NOT FOUND";
+	}else{
+	    return n.toString();
 	}
-	else {
-	    if (i < t.getData()){
-		t = t.getLeft();
-		rsearch(t,i);
-	    }
-	    else if (i > t.getData()){
-		t = t.getRight();
-		rsearch(t,i);
-	    }
-	    else {}
-	}
-	return t;
     }
+
 
     public void rinsert(int i){
-	rinsert(data,i);
+	rinsert(root,i);
     }
 
     public void rinsert(Node t, int i){
@@ -110,12 +104,20 @@ public class Tree{
 	rinsert(t,i);
     }
 
+    public String traverse(Node t){
+	if (t == null)
+	    return "";
+	else
+	    return t.getData() + "L:" + traverse(t.getLeft()) + "R:" + traverse(t.getRight());
+    }
+
     public static void main(String[] args){
 	Node tree = new Node(5);
 	Tree t = new Tree(tree);
 	t.rinsert(20);
+	System.out.println(t.traverse(tree));
 	System.out.println(t.rsearch(20));
-	System.out.println(tree.getData());
+	System.out.println(tree.getRight().getData());
     }
 }
 
