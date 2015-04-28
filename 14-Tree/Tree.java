@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Tree{
 
     private Node root;
@@ -103,19 +105,26 @@ public class Tree{
 	}
 	rinsert(t,i);
     }
+    
+    public String toString(){
+	return root.getData() + traverse(root.getLeft()) + traverse(root.getRight());
+    }
 
     public String traverse(Node t){
 	if (t == null)
-	    return "";
+	    return " ";
 	else
-	    return t.getData() + "L:" + traverse(t.getLeft()) + "R:" + traverse(t.getRight());
+	    return t.getData() + " L:" + traverse(t.getLeft()) + " R:" + traverse(t.getRight());
     }
-
+    
     public static void main(String[] args){
 	Node tree = new Node(5);
 	Tree t = new Tree(tree);
-	t.rinsert(20);
-	System.out.println(t.traverse(tree));
+	Random r = new Random();
+	for (int i = 0; i < 5; i++){
+	    t.rinsert(r.nextInt(20));
+	}
+	System.out.println(t);
 	System.out.println(t.rsearch(20));
 	System.out.println(tree.getRight().getData());
     }
