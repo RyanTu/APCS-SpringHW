@@ -114,19 +114,66 @@ public class Tree{
 	if (t == null)
 	    return " ";
 	else
-	    return t.getData() + " L:" + traverse(t.getLeft()) + " R:" + traverse(t.getRight());
+	    return traverse(t.getLeft()) + t.getData() + traverse(t.getRight());
+    }
+
+    public Node remove(int t){
+	Node lead = root;
+	Node follow = null;
+	boolean wentLeft = true;
+	if (t != lead.getData()){
+	    while (t != lead.getData()){
+		follow = lead;
+		if (t > lead.getData()){
+		    lead = lead.getRight();
+		    wentLeft = false;
+		} else {
+		    lead = lead.getLeft();
+		    wentLeft = true;
+		}
+	    }
+	    if (lead.getLeft() == null && lead.getRight() == null){
+		if (wentLeft) {
+		    follow.setLeft(null);
+		} else {				      
+		    follow.setRight(null);
+		}
+	    }
+	    if (lead.getLeft() == null || lead.getRight() == null){
+		if (wentLeft) {
+		    if (lead.getLeft() == null){
+			follow.setLeft(lead.getRight());
+		    }
+		    else{
+			follow.setLeft(lead.getLeft());
+		    }
+		}
+		else{
+		    if (lead.getLeft() == null){
+			follow.setRight(lead.getRight());
+		    }
+		    else{
+			follow.setRight(lead.getLeft());
+		    }
+		}
+	    }
+	}
+	return lead;
     }
     
     public static void main(String[] args){
-	Node tree = new Node(5);
+	Node tree = new Node(10);
 	Tree t = new Tree(tree);
-	Random r = new Random();
-	for (int i = 0; i < 5; i++){
-	    t.rinsert(r.nextInt(20));
-	}
+	// Random r = new Random();
+	// for (int i = 0; i < 5; i++){
+	//     t.rinsert(r.nextInt(20));
+	// }
 	System.out.println(t);
-	System.out.println(t.rsearch(20));
-	System.out.println(tree.getRight().getData());
+        t.insert(20);
+	t.insert(5);
+	System.out.println(t);
+	t.remove(20);
+	System.out.println(tree.getRight());
     }
 }
 
