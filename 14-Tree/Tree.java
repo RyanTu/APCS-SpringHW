@@ -107,7 +107,7 @@ public class Tree{
     }
     
     public String toString(){
-	return root.getData() + traverse(root.getLeft()) + traverse(root.getRight());
+	return traverse(root.getLeft()) + root.getData() + traverse(root.getRight());
     }
 
     public String traverse(Node t){
@@ -121,8 +121,36 @@ public class Tree{
 	Node lead = root;
 	Node follow = null;
 	boolean wentLeft = true;
-	if (t != lead.getData()){
-	    while (t != lead.getData()){
+	if (t == lead.getData()){
+	    if (lead.getLeft() == null && lead.getRight() == null){
+		root = null;
+	    }
+	    else if (lead.getLeft() == null){
+		root = lead.getRight();
+	    }
+	    else if (lead.getRight() == null){
+		root = lead.getLeft();
+	    }
+	    else{
+	        Node begin = lead.getLeft();
+		Node beginFollow = lead;
+		boolean movePointer = false;
+		while (begin.getRight() != null){
+		    beginFollow = lead;
+		    begin = begin.getRight();
+		    movePointer = true;
+		}
+		begin.setRight(lead.getRight());
+		if (!movePointer)
+		    beginFollow.setLeft(begin.getLeft());
+		else 
+		    beginFollow.setRight(begin.getLeft());
+		begin.setLeft(lead.getLeft());
+		root = begin;
+	    }
+	}
+	else {
+	    while (t != lead.getData() && (lead.getLeft() != null || lead.getRight() != null)){
 		follow = lead;
 		if (t > lead.getData()){
 		    lead = lead.getRight();
@@ -132,29 +160,52 @@ public class Tree{
 		    wentLeft = true;
 		}
 	    }
-	    if (lead.getLeft() == null && lead.getRight() == null){
-		if (wentLeft) {
-		    follow.setLeft(null);
-		} else {				      
-		    follow.setRight(null);
-		}
+	    if (lead.getData() != t){
+		return null;
 	    }
-	    if (lead.getLeft() == null || lead.getRight() == null){
-		if (wentLeft) {
-		    if (lead.getLeft() == null){
-			follow.setLeft(lead.getRight());
+	    else {
+		if (lead.getLeft() == null && lead.getRight() == null){
+		    if (wentLeft) {
+			follow.setLeft(null);
+		    } else {				      
+			follow.setRight(null);
+		    }
+		}
+		else if (lead.getLeft() == null || lead.getRight() == null){
+		    if (wentLeft) {
+			if (lead.getLeft() == null){
+			    follow.setLeft(lead.getRight());
+			}
+			else{
+			    follow.setLeft(lead.getLeft());
+			}
 		    }
 		    else{
-			follow.setLeft(lead.getLeft());
+			if (lead.getLeft() == null){
+			    follow.setRight(lead.getRight());
+			}
+			else{
+			    follow.setRight(lead.getLeft());
+			}
 		    }
 		}
 		else{
-		    if (lead.getLeft() == null){
-			follow.setRight(lead.getRight());
+		    Node replaceFollow = lead;
+		    Node replace = lead.getLeft();
+		    while (replace.getRight() != null){
+			replaceFollow = replace;
+			replace = replace.getRight();
+		    }
+		    replace.setRight(lead.getRight());
+		    replaceFollow.setRight(replace.getLeft());
+		    if (replace.getLeft() != null)
+			replace.setLeft(lead.getLeft());		
+		    if (wentLeft){
+			follow.setLeft(replace);
 		    }
 		    else{
-			follow.setRight(lead.getLeft());
-		    }
+			follow.setRight(replace);
+		    }	    
 		}
 	    }
 	}
@@ -164,16 +215,17 @@ public class Tree{
     public static void main(String[] args){
 	Node tree = new Node(10);
 	Tree t = new Tree(tree);
-	// Random r = new Random();
-	// for (int i = 0; i < 5; i++){
-	//     t.rinsert(r.nextInt(20));
-	// }
 	System.out.println(t);
         t.insert(20);
 	t.insert(5);
+	t.insert(15);
+	t.insert(30);
+	t.insert(17);
+	t.insert(25);
+	t.insert(8);
 	System.out.println(t);
-	t.remove(20);
-	System.out.println(tree.getRight());
+	t.remove(17);
+	System.out.println(t);
     }
 }
 
