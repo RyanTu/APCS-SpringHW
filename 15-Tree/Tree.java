@@ -212,43 +212,95 @@ public class Tree{
 	return lead;
     }
 
-    public int max(){
-	return max(root);
+    public int maxValue(){
+	return maxValue(root);
     }
     
-    public int max(Node t){
-        return max(t,t.getData());
+    public int maxValue(Node t){
+        if (t.getRight() == null)
+	    return t.getData();
+	else {
+	    return maxValue(t.getRight());
+	}
     }
 
-    public int max(Node t, int currMax){
-	int c = currMax;
+    public int height(){
+	return height(root);
+    }
+
+    public int height(Node t){
 	if (t == null)
-	    return c;
-	else {
-	    if (t > c){
-		max(t.getLeft(),t.getData());
-		max(t.getRight(),t.getData());
+	    return 0;
+	else{
+	    if (height(t.getLeft()) > height(t.getRight()))
+		return 1 + height(t.getLeft());
+	    else
+		return 1 + height(t.getRight());
+	}
+    }
+
+    public void splitDupes(){
+	splitDupes(root);
+    }
+
+    public void splitDupes(Node t){
+	if (t != null){
+	    if (t.getLeft() != null && t.getData() == t.getLeft().getData()){
+		Node filler = new Node(t.getData()-1);
+		filler.setRight(t.getRight());
+		t.setLeft(filler);
 	    }
-	    else {
-		max(t.getLeft(),c);
-		max(t.getRight(),c);
+	    if (t.getRight() != null && t.getData() == t.getRight().getData()){
+		Node filler = new Node(t.getData()-1);
+		filler.setRight(t.getRight());
+		t.setRight(filler);
+	    }
+	    splitDupes(t.getLeft());
+	    splitDupes(t.getRight());
+	}
+    }
+
+    public int longest(){
+	return longest(root);
+    }
+
+    public int longest(Node t){
+	if (t == null)
+	    return 0;
+	int root = 1 + height(t.getLeft()) + height(t.getRight());
+	if (longest(t.getLeft()) > longest(t.getRight())){
+	    if (longest(t.getLeft()) > root){
+		return 1 + longest(t.getLeft());
+	    } else {
+		return root;
 	    }
 	}
-	return c;
+	else{
+	    if (longest(t.getRight()) > root){
+		return 1 + longest(t.getRight());
+	    } else {
+		return root;
+	    }
+	}
     }
     
     public static void main(String[] args){
 	Node tree = new Node(10);
 	Tree t = new Tree(tree);
         t.insert(20);
+	t.insert(20);
 	t.insert(5);
 	t.insert(15);
 	t.insert(30);
 	t.insert(17);
 	t.insert(25);
 	t.insert(8);
+	t.insert(18);
 	System.out.println(t);
-	System.out.println(t.max());
+	System.out.println(t.maxValue());
+	System.out.println(t.height());
+	t.splitDupes();
+	System.out.println(t.longest());
     }
 }
 
